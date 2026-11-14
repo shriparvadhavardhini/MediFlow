@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MediFlow — Hospital Appointment Booking</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+<!-- ============================= TOP NAV ============================= -->
+<header class="topbar">
+  <div class="wrap topbar-inner">
+    <a href="#home" class="brand" data-nav="home">
+      <svg class="brand-mark" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="20" cy="20" r="19" stroke="#12463C" stroke-width="2"/>
+        <path d="M6 21h5l3-8 4 15 3-11 2 4h11" stroke="#F2794F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      </svg>
+      MediFlow
+    </a>
+    <nav class="nav-links" id="nav-links">
+      <a href="#home" class="nav-link" data-nav="home">Home</a>
+      <a href="#browse" class="nav-link" data-nav="browse">Find a doctor</a>
+      <a href="#appointments" class="nav-link" data-nav="appointments">My appointments</a>
+      <a href="#admin" class="nav-link hidden" data-nav="admin" id="admin-nav-link">Admin</a>
+    </nav>
+    <div class="nav-actions" id="nav-actions">
+      <button class="btn btn-ghost btn-sm" id="btn-login">Log in</button>
+      <button class="btn btn-dark btn-sm" id="btn-signup">Sign up</button>
+    </div>
+  </div>
+</header>
+
+<!-- ============================= HOME VIEW ============================= -->
+<main>
+<section class="view active" data-view="home">
+
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <span class="eyebrow"><span class="eyebrow-dot"></span> Booking open · same-day slots available</span>
+        <h1>Care that fits<br><em>your</em> schedule.</h1>
+        <p class="hero-sub">Book verified specialists in under two minutes. No phone queues, no paperwork at the counter — just pick a department, a time, and show up.</p>
+        <div class="hero-actions">
+          <button class="btn btn-primary" data-go="browse">Book an appointment</button>
+          <button class="btn btn-outline" data-go="appointments">View my appointments</button>
+        </div>
+        <div class="hero-stats">
+          <div class="hero-stat"><b id="stat-doctors">10+</b><span>Specialists</span></div>
+          <div class="hero-stat"><b>8</b><span>Departments</span></div>
+          <div class="hero-stat"><b>&lt;2min</b><span>To book</span></div>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="hero-visual-head"><span>Live queue</span><b id="clock">--:--</b></div>
+        <svg class="pulse-svg" viewBox="0 0 400 120" preserveAspectRatio="none">
+          <path class="line" d="M0,60 L60,60 L80,20 L100,100 L120,40 L140,60 L200,60 L220,30 L240,90 L260,60 L400,60"/>
+        </svg>
+        <div class="hero-visual-cards">
+          <div class="mini-card"><b>Dr. Anjali Rao</b><span>Cardiology · 09:40 today</span></div>
+          <div class="mini-card"><b>Dr. Neha Gupta</b><span>Dentistry · 11:20 today</span></div>
+          <div class="mini-card"><b>Dr. Ritu Sharma</b><span>Pediatrics · 16:00 today</span></div>
+          <div class="mini-card"><b>Dr. Rahul Desai</b><span>Ophthalmology · 17:40 today</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="section-label">The flow</span>
+        <h2>Four steps, start to confirmed</h2>
+        <p>The same path every time, whether it's a routine checkup or a specialist referral.</p>
+      </div>
+      <div class="flow-rail">
+        <svg viewBox="0 0 1000 46" preserveAspectRatio="none">
+          <path d="M60,23 L250,23 L270,6 L290,40 L310,23 L500,23 L520,6 L540,40 L560,23 L750,23 L770,6 L790,40 L810,23 L940,23"/>
+          <path class="active" d="M60,23 L250,23 L270,6 L290,40 L310,23 L500,23 L520,6 L540,40 L560,23 L750,23 L770,6 L790,40 L810,23 L940,23"/>
+        </svg>
+        <div class="flow-steps">
+          <div class="flow-step is-lit"><div class="flow-step-dot">01</div><h4>Choose department</h4><p>Cardiology, pediatrics, dental and more.</p></div>
+          <div class="flow-step is-lit"><div class="flow-step-dot">02</div><h4>Pick your doctor</h4><p>Compare experience, fee and bio.</p></div>
+          <div class="flow-step is-lit"><div class="flow-step-dot">03</div><h4>Select a slot</h4><p>Live availability, no double-booking.</p></div>
+          <div class="flow-step is-lit"><div class="flow-step-dot">04</div><h4>Confirm</h4><p>Instant confirmation, ready to manage.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="section-label">Departments</span>
+        <h2>Find the right specialist</h2>
+      </div>
+      <div class="dept-grid" id="home-dept-grid">
+        <div class="loading-row">Loading departments…</div>
+      </div>
+    </div>
+  </section>
+</section>
+
+<!-- ============================= BROWSE VIEW ============================= -->
+<section class="view" data-view="browse">
+  <div class="wrap section">
+    <div class="section-head">
+      <span class="section-label">Find a doctor</span>
+      <h2>Browse by department</h2>
+      <p>Pick a department to see available specialists, or search by name.</p>
+    </div>
+
+    <div class="pill-select" id="browse-dept-pills" style="margin-bottom:28px"></div>
+
+    <div id="browse-doctor-grid" class="doctor-grid">
+      <div class="loading-row">Loading doctors…</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================= BOOKING WIZARD VIEW ============================= -->
+<section class="view" data-view="book">
+  <div class="wrap section" style="max-width:820px">
+    <div class="wizard-card">
+      <div class="wizard-progress" id="wizard-progress"></div>
+
+      <!-- Step 1: department -->
+      <div class="wizard-step" data-step="1">
+        <h3>Choose a department</h3>
+        <p class="step-hint">Select the area of care you need.</p>
+        <div class="pill-select" id="wiz-dept-pills"></div>
+      </div>
+
+      <!-- Step 2: doctor -->
+      <div class="wizard-step" data-step="2">
+        <h3>Pick your doctor</h3>
+        <p class="step-hint">Based on availability and specialty match.</p>
+        <div class="doc-pick-list" id="wiz-doctor-list"></div>
+      </div>
+
+      <!-- Step 3: date & time -->
+      <div class="wizard-step" data-step="3">
+        <h3>Select a date and time</h3>
+        <p class="step-hint">Times shown are currently open on the doctor's schedule.</p>
+        <div class="date-strip" id="wiz-date-strip"></div>
+        <div class="slot-grid" id="wiz-slot-grid"></div>
+      </div>
+
+      <!-- Step 4: details -->
+      <div class="wizard-step" data-step="4">
+        <h3>Your details</h3>
+        <p class="step-hint">Confirmed under your MediFlow account.</p>
+        <div class="field">
+          <label for="wiz-reason">Reason for visit (optional)</label>
+          <textarea id="wiz-reason" placeholder="e.g. Persistent headache for 3 days"></textarea>
+        </div>
+        <div class="summary-card" id="wiz-summary"></div>
+      </div>
+
+      <!-- Step 5: confirmation -->
+      <div class="wizard-step" data-step="5">
+        <div class="confirm-check">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <h3 style="text-align:center">Appointment confirmed</h3>
+        <p class="step-hint" style="text-align:center">A confirmation has been saved to your account.</p>
+        <div class="summary-card" id="wiz-confirm-summary" style="max-width:420px;margin:24px auto 0"></div>
+      </div>
+
+      <div class="wizard-nav">
+        <button class="btn btn-ghost" id="wiz-back">Back</button>
+        <button class="btn btn-primary" id="wiz-next">Continue</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================= MY APPOINTMENTS VIEW ============================= -->
+<section class="view" data-view="appointments">
+  <div class="wrap section">
+    <div class="section-head" style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:16px">
+      <div>
+        <span class="section-label">Your care</span>
+        <h2>My appointments</h2>
+      </div>
+      <button class="btn btn-primary" data-go="browse">Book new appointment</button>
+    </div>
+    <div class="appt-list" id="appt-list">
+      <div class="loading-row">Loading…</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================= ADMIN VIEW ============================= -->
+<section class="view" data-view="admin">
+  <div class="wrap section">
+    <div class="section-head">
+      <span class="section-label">Admin</span>
+      <h2>Hospital dashboard</h2>
+    </div>
+
+    <div class="admin-stats" id="admin-stats"></div>
+
+    <div class="admin-tabs">
+      <button class="admin-tab active" data-admin-tab="appointments">All appointments</button>
+      <button class="admin-tab" data-admin-tab="doctors">Manage doctors</button>
+    </div>
+
+    <div id="admin-panel-appointments">
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Patient</th><th>Doctor</th><th>Department</th><th>Date</th><th>Time</th><th>Status</th></tr></thead>
+          <tbody id="admin-appt-body"><tr><td colspan="6" class="loading-row">Loading…</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div id="admin-panel-doctors" class="hidden">
+      <form class="admin-add-form" id="admin-add-doctor-form">
+        <h3 style="font-size:17px;margin-bottom:16px">Add a doctor</h3>
+        <div class="form-grid">
+          <div class="field"><label>Full name</label><input type="text" id="ad-name" required placeholder="Dr. Jane Doe"></div>
+          <div class="field"><label>Department</label><select id="ad-dept" required></select></div>
+          <div class="field"><label>Qualification</label><input type="text" id="ad-qual" required placeholder="MBBS, MD"></div>
+          <div class="field"><label>Experience (years)</label><input type="number" id="ad-exp" min="0" required></div>
+          <div class="field"><label>Consultation fee</label><input type="number" id="ad-fee" min="0" required></div>
+        </div>
+        <div class="field"><label>Short bio</label><textarea id="ad-bio" placeholder="Areas of focus, approach to care…"></textarea></div>
+        <button class="btn btn-dark" type="submit">Add doctor</button>
+      </form>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Name</th><th>Department</th><th>Qualification</th><th>Experience</th><th>Fee</th></tr></thead>
+          <tbody id="admin-doctor-body"><tr><td colspan="5" class="loading-row">Loading…</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap footer-inner">
+    <p>© 2026 MediFlow Hospital Systems. For medical emergencies, call your local emergency number.</p>
+    <p>Built with Flask &amp; SQLite</p>
+  </div>
+</footer>
+
+<!-- ============================= AUTH MODAL ============================= -->
+<div class="modal-backdrop hidden" id="auth-modal">
+  <div class="modal">
+    <button class="modal-close" id="auth-close" aria-label="Close">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+    <div class="auth-tabs">
+      <div class="auth-tab active" data-auth-tab="login">Log in</div>
+      <div class="auth-tab" data-auth-tab="signup">Sign up</div>
+    </div>
+
+    <div id="auth-msg"></div>
+
+    <form class="auth-form active" id="login-form" data-form="login">
+      <div class="field"><label>Email</label><input type="email" id="login-email" required placeholder="you@example.com"></div>
+      <div class="field"><label>Password</label><input type="password" id="login-password" required placeholder="••••••••"></div>
+      <button class="btn btn-primary btn-block" type="submit">Log in</button>
+      <p class="auth-hint">Admin demo: admin@hospital.com / admin123</p>
+    </form>
+
+    <form class="auth-form" id="signup-form" data-form="signup">
+      <div class="field"><label>Full name</label><input type="text" id="signup-name" required placeholder="Jordan Lee"></div>
+      <div class="field"><label>Email</label><input type="email" id="signup-email" required placeholder="you@example.com"></div>
+      <div class="field"><label>Phone</label><input type="tel" id="signup-phone" placeholder="+1 555 000 0000"></div>
+      <div class="field"><label>Password</label><input type="password" id="signup-password" required placeholder="At least 6 characters"></div>
+      <button class="btn btn-primary btn-block" type="submit">Create account</button>
+    </form>
+  </div>
+</div>
+
+<div id="toast-region"></div>
+
+<script src="/static/js/app.js"></script>
+</body>
+</html>
